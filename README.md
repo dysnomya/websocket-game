@@ -1,58 +1,23 @@
 # websocket-game
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+## Message structure
 
-If you want to learn more about Quarkus, please visit its website: <https://quarkus.io/>.
+### NAGŁÓWEK
 
-## Running the application in dev mode
+| Przesunięcie w bajtach | Typ danych | Nazwa pola               | Opis / Podział bitowy                                                                                                                                                                                                    |
+| :--- | :--- |:-------------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **0 – 1** | `Uint16` | **Liczba punktów ($N$)** | Definiuje liczbę 4-bajtowych punktów współrzędnych, które następują bezpośrednio po nagłówku.                                                                                                                            |
+| **2** | `Uint8` | **Kanał czerwony (R)**   | $0$ do $255$                                                                                                                                                                                                             |
+| **3** | `Uint8` | **Kanał zielony (G)**    | $0$ do $255$                                                                                                                                                                                                             |
+| **4** | `Uint8` | **Kanał niebieski (B)**  | $0$ do $255$                                                                                                                                                                                                             |
+| **5** | `Uint8` | **Bajt flag i rozmiaru** | **Skompresowany bajt stanu (8 bitów):**<br>• **Bity 0-5 (6 bitów):** Rozmiar pędzla ($0$ do $63$)<br>• **Bit 6 (1 bit):** Czy nowa linia (`1` = tak, `0` = nie)<br>• **Bit 7 (1 bit):** Czy gumka (`1` = tak, `0` = nie) |
+| **6 – 7** | `Uint16` | **Padding**              | wyrównanie do struktury 32-bitowej.                                                                                                                                                                             |
 
-You can run your application in dev mode that enables live coding using:
+### BLOK DANYCH
 
-```shell script
-./mvnw quarkus:dev
-```
+| Względne przesunięcie | Typ danych | Nazwa pola | Opis / Zakres wartości                                   |
+| :--- | :--- | :--- |:---------------------------------------------------------|
+| **0 – 1** | `Uint16` | **Współrzędna X** | $0$ do $800$                                             |
+| **2 – 3** | `Uint16` | **Współrzędna Y** | $0$ do $600$ |
 
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at <http://localhost:8080/q/dev/>.
-
-## Packaging and running the application
-
-The application can be packaged using:
-
-```shell script
-./mvnw package
-```
-
-It produces the `quarkus-run.jar` file in the `target/quarkus-app/` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `target/quarkus-app/lib/` directory.
-
-The application is now runnable using `java -jar target/quarkus-app/quarkus-run.jar`.
-
-If you want to build an _über-jar_, execute the following command:
-
-```shell script
-./mvnw package -Dquarkus.package.jar.type=uber-jar
-```
-
-The application, packaged as an _über-jar_, is now runnable using `java -jar target/*-runner.jar`.
-
-## Creating a native executable
-
-You can create a native executable using:
-
-```shell script
-./mvnw package -Dnative
-```
-
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using:
-
-```shell script
-./mvnw package -Dnative -Dquarkus.native.container-build=true
-```
-
-You can then execute your native executable with: `./target/websocket-game-1.0.0-SNAPSHOT-runner`
-
-If you want to learn more about building native executables, please consult <https://quarkus.io/guides/maven-tooling>.
-
-## Related Guides
-
-- WebSockets Next ([guide](https://quarkus.io/guides/websockets-next-reference)): Implementation of the WebSocket API with enhanced efficiency and usability
+Rozmiar pakietu

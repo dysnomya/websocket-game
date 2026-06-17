@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Binary Collaborative Canvas</title>
+    <title>Drawing</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -11,21 +11,42 @@
     <div class="lobby-card">
         <h2>Join a Canvas Room</h2>
         <p>Enter a room name to start drawing with friends in real-time.</p>
-        <input type="text" id="roomInput" placeholder="e.g., lobby, pixel-art, doodle" maxlength="20">
+        <input type="text" id="roomInput" placeholder="e.g., pixel-art, doodle, master-plan" maxlength="20">
         <button id="joinBtn">Join Room</button>
+
+        <div id="lobby-rooms-container">
+            <h3>Or click to join an active room:</h3>
+            <div id="lobby-rooms-list">
+                <span class="no-rooms">No active rooms right now. Create one above!</span>
+            </div>
+        </div>
     </div>
 </div>
 
 <div id="game-container" class="hidden">
-    <div id="controls">
-        <h3 id="room-title">Room: Connecting...</h3>
-        <input type="color" id="colorPicker" value="#000000">
-        <button id="drawBtn" class="btn active">Brush</button>
-        <button id="eraseBtn" class="btn">Eraser</button>
-        <input type="range" id="sizeSlider" min="2" max="30" value="5">
-    </div>
 
-    <canvas id="paintCanvas" width="800" height="600"></canvas>
+    <aside id="sidebar">
+        <h3>Active Rooms</h3>
+        <div id="sidebar-create-box">
+            <input type="text" id="sidebarRoomInput" placeholder="New room name..." maxlength="20">
+            <button id="sidebarCreateBtn">+</button>
+        </div>
+        <ul id="rooms-list"></ul>
+    </aside>
+
+    <main id="workspace">
+        <div id="controls">
+            <h3 id="room-title">Room: Connecting...</h3>
+            <input type="color" id="colorPicker" value="#000000">
+            <button id="drawBtn" class="btn active">Brush</button>
+            <button id="eraseBtn" class="btn">Eraser</button>
+            <input type="range" id="sizeSlider" min="2" max="30" value="5">
+
+            <button id="leaveRoomBtn" class="btn leave-btn">Leave Room</button>
+        </div>
+
+        <canvas id="paintCanvas" width="800" height="600"></canvas>
+    </main>
 </div>
 
 <script src="script.js"></script>

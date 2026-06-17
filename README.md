@@ -20,4 +20,7 @@
 | **0 – 1** | `Uint16` | **Współrzędna X** | $0$ do $800$                                             |
 | **2 – 3** | `Uint16` | **Współrzędna Y** | $0$ do $600$ |
 
-Rozmiar pakietu
+## Uruchamianie projektu
+```bash
+mvn quarkus:dev
+```
